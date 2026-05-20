@@ -83,6 +83,8 @@ class Email(BaseModel):
     status: str = "draft"
     sent_at: Optional[datetime] = None
     created_at: Optional[datetime] = None
+    contact_email: Optional[str] = None
+    contact_name: Optional[str] = None
 
     class Config:
         from_attributes = True

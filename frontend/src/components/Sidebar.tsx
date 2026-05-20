@@ -7,6 +7,7 @@ const navigation = [
   { name: "Dashboard", href: "/", icon: HomeIcon },
   { name: "Contacts", href: "/contacts", icon: UsersIcon },
   { name: "Compose", href: "/compose", icon: PenIcon },
+  { name: "Drafts", href: "/drafts", icon: DraftIcon },
   { name: "History", href: "/history", icon: HistoryIcon },
   { name: "Settings", href: "/settings", icon: SettingsIcon },
 ];
@@ -94,6 +95,15 @@ function HistoryIcon({ className }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  );
+}
+
+function DraftIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-7.5A2.25 2.25 0 0017.25 4.5H6.75A2.25 2.25 0 004.5 6.75v10.5A2.25 2.25 0 006.75 19.5h7.5" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 8.25h7.5M8.25 12h4.5M16.5 19.5l3-3m0 0l-3-3m3 3H12" />
     </svg>
   );
 }
