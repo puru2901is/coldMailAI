@@ -1,0 +1,196 @@
+# ==============================================================================
+# Comprehensive .gitignore for coldMailAI (Python Backend & Next.js Frontend)
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. OS & System Files
+# ------------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Icon\r
+
+# ------------------------------------------------------------------------------
+# 2. IDEs, Editors & Tooling
+# ------------------------------------------------------------------------------
+# Visual Studio Code
+.vscode/
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/settings.json
+!.vscode/tasks.json
+*.code-workspace
+.history/
+
+# JetBrains (PyCharm, WebStorm, IntelliJ, etc.)
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim / Emacs
+*~
+*.swp
+*.swo
+.netrwhist
+[^.]*.un~
+
+# ------------------------------------------------------------------------------
+# 3. Environment Variables, Credentials & Secrets
+# ------------------------------------------------------------------------------
+# Core Secrets & Keys
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.backup
+.env.*.local
+*.env
+*.pem
+*.key
+*.pub
+*.cert
+*.crt
+*.pfx
+*.p12
+secrets.json
+credentials.json
+jwt_secret.txt
+service_account.json
+supabase_backup*
+
+# ------------------------------------------------------------------------------
+# 4. Python (Backend)
+# ------------------------------------------------------------------------------
+# Virtual Environments
+venv/
+.venv/
+env/
+.env/
+ENV/
+virtualenv/
+pip-selfcheck.json
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+bin/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Pytest & Coverage
+.cache/
+.pytest_cache/
+.pytest/
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.coveragerc
+nosetests.xml
+coverage.xml
+*.cover
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# ------------------------------------------------------------------------------
+# 5. Node.js & Frontend (Next.js, TypeScript, Tailwind)
+# ------------------------------------------------------------------------------
+# Dependency directories
+node_modules/
+jspm_packages/
+web_modules/
+.pnp
+.pnp.js
+.yarn/
+!.yarn/releases/
+!.yarn/plugins/
+!.yarn/sdks/
+!.yarn/versions/
+.yarn-state.gz
+yarn-error.log
+yarn-debug.log*
+npm-debug.log*
+pnpm-debug.log*
+
+# Next.js build and production outputs
+.next/
+out/
+dist/
+
+# TypeScript build info
+*.tsbuildinfo
+next-env.d.ts
+
+# Vercel deployment artifacts
+.vercel
+
+# Serverless SDK artifacts
+.serverless/
+
+# ------------------------------------------------------------------------------
+# 6. Database & Local Storage
+# ------------------------------------------------------------------------------
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.sqlite-journal
+qdrant_storage/
+vector_db/
+
+# Local logs and run data
+*.log
+logs/
+*.pid
+*.seed
+*.pid.lock
+
+# ------------------------------------------------------------------------------
+# 7. Miscellaneous & Temp files
+# ------------------------------------------------------------------------------
+.tmp/
+temp/
+tmp/
+*.bak
+*.tmp
+*.temp
+*.swp
+*.zip
+*.tar.gz
+*.rar
