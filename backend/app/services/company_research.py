@@ -16,8 +16,7 @@ def get_gemini_client_with_search():
             raise ValueError("Gemini API key not configured. Please add it in Settings.")
 
         genai.configure(api_key=row['gemini_api_key'])
-        # Use gemini-2.0-flash which supports Google Search grounding
-        return genai.GenerativeModel('gemini-2.0-flash')
+        return genai.GenerativeModel('gemini-3.1-flash-lite')
 
 
 def research_company(company_name: str, website_url: Optional[str] = None) -> dict:

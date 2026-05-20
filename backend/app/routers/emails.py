@@ -141,6 +141,11 @@ class TestGmailRequest(BaseModel):
     gmail_app_password: str
 
 
+class EmailDraftUpdateRequest(BaseModel):
+    subject: str
+    body: str
+
+
 @router.post("/test-gmail")
 async def test_gmail_connection(request: TestGmailRequest = None):
     """Test Gmail SMTP connection with provided or saved credentials."""
@@ -159,6 +164,83 @@ async def test_gmail_connection(request: TestGmailRequest = None):
         return {"success": False, "message": str(e)}
     except Exception as e:
         return {"success": False, "message": f"Connection test failed: {str(e)}"}
+
+
+@router.put("/{email_id}", response_model=Email)
+async def update_draft_email(email_id: str, request: EmailDraftUpdateRequest):
+    """Update an unsent draft email."""
+    with get_db() as conn:
+        cursor = conn.execute("SELECT * FROM emails WHERE id = ?", (email_id,))
+        email = cursor.fetchone()
+        if not email:
+            raise HTTPException(status_code=404, detail="Email not found")
+        if email["status"] != "draft":
+            raise HTTPException(status_code=400, detail="Only draft emails can be edited")
+
+        conn.execute(
+            "UPDATE emails SET subject = ?, body = ? WHERE id = ?",
+            (request.subject, request.body, email_id),
+        )
+        cursor = conn.execute(
+            """
+            SELECT e.*, c.email as contact_email, c.name as contact_name
+            FROM emails e
+            LEFT JOIN contacts c ON e.contact_id = c.id
+            WHERE e.id = ?
+            """,
+            (email_id,),
+        )
+        return dict(cursor.fetchone())
+
+
+@router.post("/{email_id}/send")
+async def send_draft_email(email_id: str):
+    """Send an existing draft email and mark the same row as sent."""
+    with get_db() as conn:
+        cursor = conn.execute(
+            """
+            SELECT e.*, c.email as contact_email, c.name as contact_name
+            FROM emails e
+            JOIN contacts c ON e.contact_id = c.id
+            WHERE e.id = ?
+            """,
+            (email_id,),
+        )
+        email = cursor.fetchone()
+        if not email:
+            raise HTTPException(status_code=404, detail="Email not found")
+        if email["status"] != "draft":
+            raise HTTPException(status_code=400, detail="Only draft emails can be sent")
+        email = dict(email)
+
+    try:
+        result = gmail.send_email(
+            to_email=email["contact_email"],
+            subject=email["subject"],
+            body=email["body"],
+            to_name=email.get("contact_name"),
+        )
+        if not result["success"]:
+            raise HTTPException(status_code=500, detail=result.get("message", "Failed to send email"))
+
+        sent_at = datetime.now().isoformat()
+        with get_db() as conn:
+            conn.execute(
+                "UPDATE emails SET status = 'sent', sent_at = ? WHERE id = ?",
+                (sent_at, email_id),
+            )
+
+        return {
+            "success": True,
+            "message": result["message"],
+            "email_id": email_id,
+        }
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to send draft: {str(e)}")
 
 
 @router.get("/{email_id}", response_model=Email)

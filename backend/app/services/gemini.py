@@ -15,7 +15,7 @@ def get_gemini_client():
             raise ValueError("Gemini API key not configured. Please add it in Settings.")
         
         genai.configure(api_key=row['gemini_api_key'])
-        return genai.GenerativeModel('gemini-2.5-flash-lite')
+        return genai.GenerativeModel('gemini-3.1-flash-lite')
 
 
 def generate_email(
