@@ -78,6 +78,11 @@ npm run dev
 3. Generate an app password for "Mail"
 4. Copy the 16-character password
 
+### automatical mail draft for peerpush leads for runbyte.tech
+```
+python scripts/generate_peerpush_drafts.py --csv /Users/purushottambaghel/Downloads/peerpush_contacts_1_with_snapshots.csv
+```
+
 #### Gemini API Key
 1. Go to https://makersuite.google.com/app/apikey
 2. Create a new API key
